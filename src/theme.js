@@ -44,6 +44,23 @@ export const defaultTheme = {
     buttonSecondary: 'uk-button uk-button-default',
     buttonDanger: 'uk-button uk-button-danger',
     buttonLink: 'uk-button uk-button-link',
+
+    // NAVEGACION
+    //
+    // Estos no vienen de UIkit a proposito. El codigo generado por larapack
+    // pintaba las migas con un <BreadcrumbsComponent> que no existe en ningun
+    // paquete del ecosistema: cada aplicacion tenia que registrarlo
+    // globalmente sin que nada lo declarara, y la rama React directamente no
+    // tenia migas. Con estos tokens el componente se genera dentro del modulo
+    // y se estiliza desde aqui, como todo lo demas.
+    actionMenu: 'flex items-center gap-3',
+    actionMenuItem: 'text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300',
+    actionMenuDanger: 'text-sm text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300',
+
+    breadcrumb: 'flex items-center flex-wrap gap-2 text-sm mb-4',
+    breadcrumbLink: 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100',
+    breadcrumbCurrent: 'font-medium text-slate-900 dark:text-slate-100',
+    breadcrumbSeparator: 'text-slate-300 dark:text-slate-600 select-none',
 }
 
 /** @type {Theme} */

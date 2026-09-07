@@ -1,0 +1,187 @@
+/**
+ * Las primitivas del sistema de diseño innoboxrr.
+ *
+ * Antes no había primitivas: el tema eran 23 cadenas de clases sueltas que
+ * mezclaban UIkit, Tailwind y Font Awesome, con el modo oscuro incrustado en
+ * cada una (`dark:text-white` repetido treinta veces). Cambiar el color
+ * principal del ecosistema no era una edición, era una búsqueda.
+ *
+ * Aquí cada decisión vive una vez. El modo oscuro redefine solo los colores,
+ * y en tres estados, porque el visitante tiene tres:
+ *
+ *   - `:root`                      → el tema claro completo
+ *   - `prefers-color-scheme: dark` → lo que ve quien no ha elegido nada
+ *   - `[data-theme="dark"]`        → la elección explícita, que manda sobre el SO
+ *
+ * La densidad es una variable, no un conjunto de clases: `--fe-density: 0.875`
+ * en un contenedor compacta todo lo que hay dentro sin tocar un componente.
+ */
+
+:root {
+    /* ---------- COLOR ---------- */
+
+    /* Neutros con sesgo frío: un gris puro se lee como falta de decisión. */
+    --fe-bg: #f7f8fa;
+    --fe-surface: #ffffff;
+    --fe-surface-raised: #ffffff;
+    --fe-surface-sunk: #f1f2f6;
+    --fe-surface-hover: #f1f2f6;
+
+    --fe-border: #e3e5eb;
+    --fe-border-strong: #c8cbd4;
+
+    --fe-text: #1b1c22;
+    --fe-text-muted: #5c5f6b;
+    --fe-text-subtle: #8b8e9a;
+    --fe-text-inverse: #ffffff;
+
+    --fe-primary: #4b5bd7;
+    --fe-primary-hover: #3f4dc0;
+    --fe-primary-text: #ffffff;
+    --fe-primary-soft: #eceefb;
+
+    --fe-danger: #c0392f;
+    --fe-danger-hover: #a32e26;
+    --fe-danger-text: #ffffff;
+    --fe-danger-soft: #fbeceb;
+
+    --fe-success: #17714d;
+    --fe-success-soft: #e6f2ec;
+
+    --fe-warning: #8a6212;
+    --fe-warning-soft: #f8f0dd;
+
+    --fe-focus: #4b5bd7;
+
+    /* ---------- FORMA ---------- */
+
+    --fe-radius-sm: 4px;
+    --fe-radius: 6px;
+    --fe-radius-lg: 10px;
+    --fe-radius-full: 9999px;
+
+    /* ---------- ESPACIO ---------- */
+
+    --fe-space-1: 0.25rem;
+    --fe-space-2: 0.5rem;
+    --fe-space-3: 0.75rem;
+    --fe-space-4: 1rem;
+    --fe-space-5: 1.5rem;
+    --fe-space-6: 2rem;
+
+    /* ---------- TIPOGRAFIA ---------- */
+
+    --fe-font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --fe-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    --fe-text-xs: 0.75rem;
+    --fe-text-sm: 0.8125rem;
+    --fe-text-base: 0.875rem;
+    --fe-text-lg: 1rem;
+    --fe-text-xl: 1.25rem;
+
+    /* ---------- ELEVACION ---------- */
+
+    --fe-shadow-sm: 0 1px 2px rgba(16, 18, 27, 0.06);
+    --fe-shadow: 0 4px 12px rgba(16, 18, 27, 0.08);
+    --fe-shadow-lg: 0 16px 40px rgba(16, 18, 27, 0.16);
+
+    /* ---------- DENSIDAD ---------- */
+
+    /* Multiplica alturas y padding de los controles. 1 es cómodo; 0.875
+       compacta una tabla sin que sus celdas dejen de ser pulsables. */
+    --fe-density: 1;
+    --fe-control-height: calc(2.25rem * var(--fe-density));
+    --fe-control-padding-x: calc(0.75rem * var(--fe-density));
+
+    /* ---------- MOVIMIENTO ---------- */
+
+    --fe-transition: 120ms ease;
+}
+
+/* La elección explícita de claro gana sobre un sistema en oscuro, de ahí el
+   :not(). Sin él, un usuario que pide claro seguiría viendo oscuro. */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+        --fe-bg: #101116;
+        --fe-surface: #181a21;
+        --fe-surface-raised: #1f222b;
+        --fe-surface-sunk: #14161c;
+        --fe-surface-hover: #22252f;
+
+        --fe-border: #2b2e39;
+        --fe-border-strong: #3d4150;
+
+        --fe-text: #e8e9ef;
+        --fe-text-muted: #a7aab8;
+        --fe-text-subtle: #767a89;
+        --fe-text-inverse: #101116;
+
+        --fe-primary: #8b95f0;
+        --fe-primary-hover: #a0a8f5;
+        --fe-primary-text: #101116;
+        --fe-primary-soft: #21243a;
+
+        --fe-danger: #e08b83;
+        --fe-danger-hover: #eda29a;
+        --fe-danger-text: #101116;
+        --fe-danger-soft: #2c1d1c;
+
+        --fe-success: #5ec79c;
+        --fe-success-soft: #142b23;
+
+        --fe-warning: #d9ac53;
+        --fe-warning-soft: #2a2417;
+
+        --fe-focus: #8b95f0;
+
+        --fe-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+        --fe-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+        --fe-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+    }
+}
+
+/* Y el interruptor manda en las dos direcciones. */
+:root[data-theme='dark'] {
+    --fe-bg: #101116;
+    --fe-surface: #181a21;
+    --fe-surface-raised: #1f222b;
+    --fe-surface-sunk: #14161c;
+    --fe-surface-hover: #22252f;
+
+    --fe-border: #2b2e39;
+    --fe-border-strong: #3d4150;
+
+    --fe-text: #e8e9ef;
+    --fe-text-muted: #a7aab8;
+    --fe-text-subtle: #767a89;
+    --fe-text-inverse: #101116;
+
+    --fe-primary: #8b95f0;
+    --fe-primary-hover: #a0a8f5;
+    --fe-primary-text: #101116;
+    --fe-primary-soft: #21243a;
+
+    --fe-danger: #e08b83;
+    --fe-danger-hover: #eda29a;
+    --fe-danger-text: #101116;
+    --fe-danger-soft: #2c1d1c;
+
+    --fe-success: #5ec79c;
+    --fe-success-soft: #142b23;
+
+    --fe-warning: #d9ac53;
+    --fe-warning-soft: #2a2417;
+
+    --fe-focus: #8b95f0;
+
+    --fe-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --fe-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+    --fe-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* Una variante compacta lista para usar: se pone en un contenedor y todo lo
+   de dentro encoge, sin que ningún componente sepa nada. */
+.fe-dense {
+    --fe-density: 0.875;
+}

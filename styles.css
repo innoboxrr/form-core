@@ -1,0 +1,16 @@
+/**
+ * La hoja de estilos del ecosistema innoboxrr.
+ *
+ *     import 'innoboxrr-form-core/styles'
+ *
+ * Una sola linea en el arranque de la aplicacion, y los componentes de
+ * innoboxrr-form-elements, innoboxrr-react-form-elements y todo lo que genera
+ * larapack tienen aspecto sin depender de UIkit, Tailwind ni Font Awesome.
+ *
+ * Si la aplicacion ya tiene su propio sistema visual, puede no importar esto y
+ * apuntar los tokens a sus clases con `setTheme`.
+ */
+
+@import './src/tokens.css';
+@import './src/layout.css';
+@import './src/components.css';

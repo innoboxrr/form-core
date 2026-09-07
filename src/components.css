@@ -1,0 +1,518 @@
+/**
+ * Las clases del sistema de diseño innoboxrr, construidas sobre las
+ * primitivas de tokens.css.
+ *
+ * Sustituyen a lo que antes venía de fuera sin declararse: 305 clases de
+ * UIkit y 551 de Tailwind repartidas por los paquetes, ninguna de las dos
+ * declarada como dependencia. Un módulo generado solo se montaba dentro de
+ * una aplicación que ya trajera UIkit cargado, y nada lo decía.
+ *
+ * Todo lo de aquí depende únicamente de las variables de tokens.css, así que
+ * el paquete ya no exige ningún framework de CSS y el aspecto de todo el
+ * ecosistema se cambia en un sitio.
+ */
+
+/* ============================================================
+   CAMPOS
+   ============================================================ */
+
+.fe-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--fe-space-1);
+    margin-bottom: var(--fe-space-4);
+}
+
+.fe-field-inner {
+    position: relative;
+    width: 100%;
+}
+
+.fe-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fe-space-1);
+    font-size: var(--fe-text-sm);
+    font-weight: 500;
+    color: var(--fe-text);
+}
+
+.fe-help {
+    cursor: help;
+    color: var(--fe-text-subtle);
+}
+
+/* Dibujado, no una fuente de iconos. El token `helpIcon` valía
+   `fa-solid fa-circle-question`, así que el paquete exigía Font Awesome sin
+   declararlo: si la aplicación no lo cargaba, el icono no aparecía y nadie
+   se enteraba. */
+.fe-help-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--fe-text-inverse);
+    background: var(--fe-text-subtle);
+    border-radius: var(--fe-radius-full);
+    cursor: help;
+    user-select: none;
+}
+
+.fe-help-icon::before {
+    content: '?';
+}
+
+.fe-error {
+    font-size: var(--fe-text-xs);
+    font-weight: 500;
+    color: var(--fe-danger);
+}
+
+/* ============================================================
+   CONTROLES
+   ============================================================ */
+
+.fe-input,
+.fe-select,
+.fe-textarea,
+.fe-file {
+    width: 100%;
+    min-height: var(--fe-control-height);
+    padding: 0 var(--fe-control-padding-x);
+    font-family: var(--fe-font);
+    font-size: var(--fe-text-base);
+    color: var(--fe-text);
+    background: var(--fe-surface);
+    border: 1px solid var(--fe-border);
+    border-radius: var(--fe-radius);
+    transition: border-color var(--fe-transition), box-shadow var(--fe-transition);
+    appearance: none;
+}
+
+.fe-textarea {
+    padding: var(--fe-space-2) var(--fe-control-padding-x);
+    min-height: calc(var(--fe-control-height) * 3);
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.fe-select {
+    /* La flecha va en el CSS y no en un icono suelto: así el control no
+       depende de que la aplicación haya cargado una fuente de iconos. */
+    padding-right: calc(var(--fe-control-padding-x) * 2.5);
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+        linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: right var(--fe-control-padding-x) center,
+        calc(100% - var(--fe-control-padding-x) + 5px) center;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+}
+
+.fe-input::placeholder,
+.fe-textarea::placeholder {
+    color: var(--fe-text-subtle);
+}
+
+.fe-input:hover,
+.fe-select:hover,
+.fe-textarea:hover {
+    border-color: var(--fe-border-strong);
+}
+
+.fe-input:focus,
+.fe-select:focus,
+.fe-textarea:focus,
+.fe-file:focus {
+    outline: none;
+    border-color: var(--fe-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--fe-focus) 22%, transparent);
+}
+
+.fe-input:disabled,
+.fe-select:disabled,
+.fe-textarea:disabled {
+    background: var(--fe-surface-sunk);
+    color: var(--fe-text-subtle);
+    cursor: not-allowed;
+}
+
+/* El componente de validación marca el campo inválido con esta clase. */
+.fe-input-error,
+.fe-input[aria-invalid='true'],
+.fe-select[aria-invalid='true'],
+.fe-textarea[aria-invalid='true'] {
+    border-color: var(--fe-danger);
+}
+
+.fe-checkbox,
+.fe-radio {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--fe-primary);
+    border: 1px solid var(--fe-border-strong);
+    cursor: pointer;
+}
+
+.fe-radio {
+    border-radius: var(--fe-radius-full);
+}
+
+.fe-checkbox {
+    border-radius: var(--fe-radius-sm);
+}
+
+.fe-checkbox:focus-visible,
+.fe-radio:focus-visible {
+    outline: 2px solid var(--fe-focus);
+    outline-offset: 2px;
+}
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+
+.fe-button,
+.fe-button-secondary,
+.fe-button-danger,
+.fe-button-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fe-space-2);
+    min-height: var(--fe-control-height);
+    padding: 0 calc(var(--fe-control-padding-x) * 1.25);
+    font-family: var(--fe-font);
+    font-size: var(--fe-text-base);
+    font-weight: 500;
+    line-height: 1;
+    border: 1px solid transparent;
+    border-radius: var(--fe-radius);
+    cursor: pointer;
+    transition: background var(--fe-transition), border-color var(--fe-transition), color var(--fe-transition);
+}
+
+.fe-button {
+    color: var(--fe-primary-text);
+    background: var(--fe-primary);
+}
+
+.fe-button:hover:not(:disabled) {
+    background: var(--fe-primary-hover);
+}
+
+.fe-button-secondary {
+    color: var(--fe-text);
+    background: var(--fe-surface);
+    border-color: var(--fe-border);
+}
+
+.fe-button-secondary:hover:not(:disabled) {
+    background: var(--fe-surface-hover);
+    border-color: var(--fe-border-strong);
+}
+
+.fe-button-danger {
+    color: var(--fe-danger-text);
+    background: var(--fe-danger);
+}
+
+.fe-button-danger:hover:not(:disabled) {
+    background: var(--fe-danger-hover);
+}
+
+.fe-button-link {
+    min-height: 0;
+    padding: 0;
+    color: var(--fe-primary);
+    background: none;
+}
+
+.fe-button-link:hover:not(:disabled) {
+    text-decoration: underline;
+}
+
+.fe-button:focus-visible,
+.fe-button-secondary:focus-visible,
+.fe-button-danger:focus-visible,
+.fe-button-link:focus-visible {
+    outline: 2px solid var(--fe-focus);
+    outline-offset: 2px;
+}
+
+.fe-button:disabled,
+.fe-button-secondary:disabled,
+.fe-button-danger:disabled,
+.fe-button-link:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* ============================================================
+   NAVEGACION Y ACCIONES
+   ============================================================ */
+
+.fe-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--fe-space-2);
+    margin-bottom: var(--fe-space-4);
+    font-size: var(--fe-text-sm);
+}
+
+.fe-breadcrumb-link {
+    color: var(--fe-text-muted);
+    text-decoration: none;
+}
+
+.fe-breadcrumb-link:hover {
+    color: var(--fe-text);
+    text-decoration: underline;
+}
+
+.fe-breadcrumb-current {
+    font-weight: 500;
+    color: var(--fe-text);
+}
+
+.fe-breadcrumb-separator {
+    color: var(--fe-text-subtle);
+    user-select: none;
+}
+
+.fe-action-menu {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fe-space-3);
+}
+
+.fe-action-item {
+    font-size: var(--fe-text-sm);
+    color: var(--fe-primary);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.fe-action-item:hover {
+    text-decoration: underline;
+}
+
+.fe-action-danger {
+    font-size: var(--fe-text-sm);
+    color: var(--fe-danger);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.fe-action-danger:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================
+   SUPERFICIES
+   ============================================================ */
+
+.fe-surface {
+    background: var(--fe-surface);
+    border: 1px solid var(--fe-border);
+    border-radius: var(--fe-radius-lg);
+}
+
+.fe-surface-raised {
+    background: var(--fe-surface-raised);
+    border: 1px solid var(--fe-border);
+    border-radius: var(--fe-radius-lg);
+    box-shadow: var(--fe-shadow);
+}
+
+/* ============================================================
+   PIEZAS DE APLICACION
+   ============================================================ */
+
+.fe-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--fe-space-3);
+    padding: var(--fe-space-3) var(--fe-space-4);
+    border-bottom: 1px solid var(--fe-border);
+}
+
+.fe-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 var(--fe-space-2);
+    height: 1.375rem;
+    font-size: var(--fe-text-xs);
+    font-weight: 500;
+    border-radius: var(--fe-radius-full);
+    background: var(--fe-surface-sunk);
+    color: var(--fe-text-muted);
+}
+
+/* Un esqueleto en vez de un spinner: mantiene la forma de lo que va a
+   llegar, así que la página no salta al cargar. */
+.fe-skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--fe-surface-sunk) 25%,
+        var(--fe-surface-hover) 37%,
+        var(--fe-surface-sunk) 63%
+    );
+    background-size: 400% 100%;
+    border-radius: var(--fe-radius-sm);
+    animation: fe-skeleton 1.4s ease infinite;
+}
+
+@keyframes fe-skeleton {
+    0% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}
+
+.fe-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 18, 27, 0.45);
+}
+
+.fe-dialog {
+    background: var(--fe-surface-raised);
+    border: 1px solid var(--fe-border);
+    border-radius: var(--fe-radius-lg);
+    box-shadow: var(--fe-shadow-lg);
+    max-height: 85vh;
+    overflow: auto;
+}
+
+.fe-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(32rem, 100vw);
+    background: var(--fe-surface);
+    border-left: 1px solid var(--fe-border);
+    box-shadow: var(--fe-shadow-lg);
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.fe-menu {
+    min-width: 11rem;
+    padding: var(--fe-space-1);
+    background: var(--fe-surface-raised);
+    border: 1px solid var(--fe-border);
+    border-radius: var(--fe-radius);
+    box-shadow: var(--fe-shadow);
+}
+
+.fe-menu-item {
+    display: flex;
+    align-items: center;
+    gap: var(--fe-space-2);
+    width: 100%;
+    padding: var(--fe-space-2) var(--fe-space-3);
+    font-size: var(--fe-text-sm);
+    color: var(--fe-text);
+    text-align: left;
+    background: none;
+    border: none;
+    border-radius: var(--fe-radius-sm);
+    cursor: pointer;
+}
+
+.fe-menu-item:hover,
+.fe-menu-item[data-highlighted] {
+    background: var(--fe-surface-hover);
+}
+
+.fe-toast {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--fe-space-3);
+    padding: var(--fe-space-3) var(--fe-space-4);
+    font-size: var(--fe-text-sm);
+    background: var(--fe-surface-raised);
+    border: 1px solid var(--fe-border);
+    border-left: 3px solid var(--fe-primary);
+    border-radius: var(--fe-radius);
+    box-shadow: var(--fe-shadow);
+}
+
+.fe-toast-danger {
+    border-left-color: var(--fe-danger);
+}
+
+.fe-toast-success {
+    border-left-color: var(--fe-success);
+}
+
+/* ============================================================
+   TABLA
+   ============================================================ */
+
+.fe-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fe-text-base);
+}
+
+.fe-table th {
+    padding: var(--fe-space-2) var(--fe-space-3);
+    font-size: var(--fe-text-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--fe-text-subtle);
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--fe-border);
+}
+
+.fe-table td {
+    padding: var(--fe-space-3);
+    color: var(--fe-text);
+    border-bottom: 1px solid var(--fe-border);
+}
+
+.fe-table tbody tr:hover {
+    background: var(--fe-surface-hover);
+}
+
+.fe-table tbody tr[data-selected='true'] {
+    background: var(--fe-primary-soft);
+}
+
+/* Las columnas de números se leen mucho peor si los dígitos no se alinean. */
+.fe-table .fe-numeric {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fe-skeleton {
+        animation: none;
+    }
+
+    .fe-input,
+    .fe-select,
+    .fe-textarea,
+    .fe-button,
+    .fe-button-secondary,
+    .fe-button-danger,
+    .fe-button-link {
+        transition: none;
+    }
+}

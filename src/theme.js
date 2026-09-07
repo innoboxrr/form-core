@@ -1,13 +1,6 @@
 /**
- * Las clases CSS de los formularios, en un solo sitio.
- *
- * Antes cada componente llevaba su cadena incrustada como valor por defecto de
- * `customClass`, repetida en los dos paquetes; y el codigo generado por
- * larapack esperaba `inputClass` y `buttonClass` de un mixin global que la
- * aplicacion anfitriona tenia que registrar sin que nada lo dijera.
- *
- * Ahora hay un tema: un mapa de tokens que la aplicacion ajusta una vez, al
- * arrancar, y que leen los dos paquetes de componentes.
+ * El tema del ecosistema innoboxrr: un mapa de tokens que la aplicacion
+ * ajusta una vez, al arrancar, y que leen los dos paquetes de componentes.
  *
  *     import { setTheme } from 'innoboxrr-form-core'
  *
@@ -21,46 +14,72 @@
  * @typedef {Record<string, string>} Theme
  */
 
-/** @type {Theme} */
+/**
+ * Los tokens apuntan a las clases del sistema de diseno propio, no a las de
+ * un framework ajeno.
+ *
+ * Antes cada valor era una cadena que mezclaba UIkit, Tailwind y Font Awesome
+ * —`uk-input uk-form-large uk-border-rounded`— y ninguno de esos frameworks
+ * estaba declarado como dependencia: el paquete solo funcionaba dentro de una
+ * aplicacion que ya los trajera cargados, y nada lo decia. Ademas el modo
+ * oscuro iba incrustado en cada cadena, repetido treinta veces.
+ *
+ * Ahora las clases son nuestras y su aspecto sale de las variables de
+ * `tokens.css`, donde el modo oscuro se define una sola vez. Cambiar el color
+ * principal del ecosistema vuelve a ser editar una linea.
+ *
+ * @type {Theme}
+ */
 export const defaultTheme = {
     // ENVOLTORIOS
-    field: 'uk-margin',
-    fieldInner: 'uk-inline uk-width-1-1',
-    label: 'ml-2 text-sm font-medium text-gray-900 dark:text-white',
-    help: 'cursor-pointer',
-    helpIcon: 'fa-solid fa-circle-question',
-    error: 'fe-input-error text-red-600 font-bold',
+    field: 'fe-field',
+    fieldInner: 'fe-field-inner',
+    label: 'fe-label',
+    help: 'fe-help',
+    helpIcon: 'fe-help-icon',
+    error: 'fe-error',
 
     // CONTROLES
-    input: 'uk-input uk-form-large uk-border-rounded',
-    select: 'uk-select uk-form-large uk-border-rounded',
-    textarea: 'uk-textarea uk-form-large uk-border-rounded',
-    checkbox: 'uk-checkbox',
-    radio: 'uk-radio',
-    file: 'uk-input uk-form-large uk-border-rounded',
+    input: 'fe-input',
+    select: 'fe-select',
+    textarea: 'fe-textarea',
+    checkbox: 'fe-checkbox',
+    radio: 'fe-radio',
+    file: 'fe-file',
 
     // BOTONES
-    button: 'uk-button uk-width-1-1 button',
-    buttonSecondary: 'uk-button uk-button-default',
-    buttonDanger: 'uk-button uk-button-danger',
-    buttonLink: 'uk-button uk-button-link',
+    button: 'fe-button',
+    buttonSecondary: 'fe-button-secondary',
+    buttonDanger: 'fe-button-danger',
+    buttonLink: 'fe-button-link',
 
-    // NAVEGACION
-    //
-    // Estos no vienen de UIkit a proposito. El codigo generado por larapack
-    // pintaba las migas con un <BreadcrumbsComponent> que no existe en ningun
-    // paquete del ecosistema: cada aplicacion tenia que registrarlo
-    // globalmente sin que nada lo declarara, y la rama React directamente no
-    // tenia migas. Con estos tokens el componente se genera dentro del modulo
-    // y se estiliza desde aqui, como todo lo demas.
-    actionMenu: 'flex items-center gap-3',
-    actionMenuItem: 'text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300',
-    actionMenuDanger: 'text-sm text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300',
+    // NAVEGACION Y ACCIONES
+    breadcrumb: 'fe-breadcrumb',
+    breadcrumbLink: 'fe-breadcrumb-link',
+    breadcrumbCurrent: 'fe-breadcrumb-current',
+    breadcrumbSeparator: 'fe-breadcrumb-separator',
+    actionMenu: 'fe-action-menu',
+    actionMenuItem: 'fe-action-item',
+    actionMenuDanger: 'fe-action-danger',
 
-    breadcrumb: 'flex items-center flex-wrap gap-2 text-sm mb-4',
-    breadcrumbLink: 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100',
-    breadcrumbCurrent: 'font-medium text-slate-900 dark:text-slate-100',
-    breadcrumbSeparator: 'text-slate-300 dark:text-slate-600 select-none',
+    // SUPERFICIES Y PIEZAS DE APLICACION
+    surface: 'fe-surface',
+    surfaceRaised: 'fe-surface-raised',
+    toolbar: 'fe-toolbar',
+    badge: 'fe-badge',
+    skeleton: 'fe-skeleton',
+    overlay: 'fe-overlay',
+    dialog: 'fe-dialog',
+    drawer: 'fe-drawer',
+    menu: 'fe-menu',
+    menuItem: 'fe-menu-item',
+    toast: 'fe-toast',
+    toastDanger: 'fe-toast-danger',
+    toastSuccess: 'fe-toast-success',
+
+    // TABLA
+    table: 'fe-table',
+    tableNumeric: 'fe-numeric',
 }
 
 /** @type {Theme} */

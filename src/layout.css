@@ -1,0 +1,203 @@
+/**
+ * Las utilidades de maquetación que los componentes tomaban prestadas de
+ * UIkit.
+ *
+ * Eran 280 usos de 68 clases distintas —`uk-margin`, `uk-grid`, `uk-flex`,
+ * `uk-width-expand`…— repartidos por form-elements, react-form-elements y los
+ * dos datatables, y **UIkit no estaba declarado como dependencia en ninguno**.
+ * Se consumía como CSS global del anfitrión: el paquete solo se veía bien
+ * dentro de una aplicación que ya lo trajera.
+ *
+ * Esto es deliberadamente pequeño. No es un framework de utilidades: es
+ * exactamente lo que los componentes usaban, y nada más. Si hace falta algo
+ * nuevo, se añade aquí y así queda a la vista lo que el ecosistema necesita
+ * de verdad.
+ */
+
+/* ---------- ESPACIO ---------- */
+
+.fe-mb { margin-bottom: var(--fe-space-4); }
+.fe-mb-sm { margin-bottom: var(--fe-space-2); }
+.fe-mt { margin-top: var(--fe-space-4); }
+.fe-mt-sm { margin-top: var(--fe-space-2); }
+.fe-mt-md { margin-top: var(--fe-space-5); }
+.fe-mr-sm { margin-right: var(--fe-space-2); }
+
+.fe-p-sm { padding: var(--fe-space-3); }
+.fe-p-0 { padding: 0; }
+.fe-pt-0 { padding-top: 0; }
+
+/* ---------- CAJA ---------- */
+
+.fe-inline {
+    position: relative;
+    display: inline-block;
+}
+
+.fe-inline-clip {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.fe-relative { position: relative; }
+
+.fe-center-abs {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ---------- ANCHO ---------- */
+
+.fe-w-full { width: 100%; }
+.fe-w-auto { width: auto; }
+.fe-w-expand { flex: 1 1 0; min-width: 0; }
+
+@media (min-width: 960px) {
+    .fe-w-quarter { width: 25%; }
+}
+
+/* ---------- FLEX Y REJILLA ---------- */
+
+.fe-flex { display: flex; }
+.fe-items-center { align-items: center; }
+.fe-justify-start { justify-content: flex-start; }
+.fe-justify-center { justify-content: center; }
+.fe-justify-end { justify-content: flex-end; }
+
+.fe-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fe-space-4);
+}
+
+.fe-grid-sm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fe-space-2);
+}
+
+.fe-grid-divider > * + * {
+    border-left: 1px solid var(--fe-border);
+    padding-left: var(--fe-space-4);
+}
+
+.fe-children-expand > * { flex: 1 1 0; min-width: 0; }
+
+/* ---------- TEXTO ---------- */
+
+.fe-text-center { text-align: center; }
+.fe-text-right { text-align: right; }
+.fe-text-sm { font-size: var(--fe-text-sm); }
+.fe-text-muted { font-size: var(--fe-text-sm); color: var(--fe-text-muted); }
+.fe-text-success { color: var(--fe-success); }
+
+/* ---------- CONTENEDOR ---------- */
+
+.fe-container {
+    width: 100%;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 var(--fe-space-4);
+}
+
+.fe-container-wide {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--fe-space-4);
+}
+
+/* ---------- TARJETA ---------- */
+
+.fe-card {
+    background: var(--fe-surface);
+    border: 1px solid var(--fe-border);
+    border-radius: var(--fe-radius-lg);
+}
+
+.fe-card-body { padding: var(--fe-space-5); }
+.fe-card-sm .fe-card-body { padding: var(--fe-space-3); }
+
+/* ---------- LISTAS ---------- */
+
+.fe-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.fe-list > li + li { margin-top: var(--fe-space-2); }
+
+/* ---------- PAGINACION ---------- */
+
+.fe-pagination {
+    display: flex;
+    align-items: center;
+    gap: var(--fe-space-1);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.fe-pagination a,
+.fe-pagination button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 var(--fe-space-2);
+    font-size: var(--fe-text-sm);
+    color: var(--fe-text-muted);
+    background: none;
+    border: 1px solid transparent;
+    border-radius: var(--fe-radius-sm);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.fe-pagination a:hover,
+.fe-pagination button:hover:not(:disabled) {
+    background: var(--fe-surface-hover);
+    color: var(--fe-text);
+}
+
+.fe-pagination .fe-active {
+    color: var(--fe-primary-text);
+    background: var(--fe-primary);
+}
+
+/* Las flechas se dibujan, para no depender de la fuente de iconos de UIkit
+   (`uk-pagination-previous` es un `uk-icon`, es decir JS de UIkit). */
+.fe-page-prev::before { content: '‹'; font-size: 1.125rem; line-height: 1; }
+.fe-page-next::before { content: '›'; font-size: 1.125rem; line-height: 1; }
+
+/* ---------- ESTADOS ---------- */
+
+.fe-disabled,
+.fe-disabled a {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.fe-shrink { width: 1px; white-space: nowrap; }
+
+/* ---------- APARICION ---------- */
+
+.fe-fade-in { animation: fe-fade-in 160ms ease; }
+
+@keyframes fe-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fe-reveal > .fe-reveal-target { opacity: 0; transition: opacity var(--fe-transition); }
+.fe-reveal:hover > .fe-reveal-target,
+.fe-reveal:focus-within > .fe-reveal-target { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+    .fe-fade-in { animation: none; }
+    .fe-reveal > .fe-reveal-target { transition: none; }
+}

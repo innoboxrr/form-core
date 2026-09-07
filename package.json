@@ -31,6 +31,9 @@
   ],
   "author": "Homero Raul Vargas Cruz",
   "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "devDependencies": {
     "jsdom": "^25.0.0",
     "vitest": "^3.0.0"

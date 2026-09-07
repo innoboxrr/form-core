@@ -1,0 +1,38 @@
+{
+  "name": "innoboxrr-form-core",
+  "version": "1.0.0",
+  "description": "El nucleo agnostico de los formularios innoboxrr: tema, archivos y zonas horarias.",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./theme": "./src/theme.js",
+    "./files": "./src/files.js",
+    "./timezone": "./src/timezone.js",
+    "./src/*": "./src/*"
+  },
+  "files": [
+    "index.js",
+    "src"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/innoboxrr/form-core.git"
+  },
+  "keywords": [
+    "form",
+    "theme",
+    "innoboxrr"
+  ],
+  "author": "Homero Raul Vargas Cruz",
+  "license": "MIT",
+  "devDependencies": {
+    "jsdom": "^25.0.0",
+    "vitest": "^3.0.0"
+  }
+}

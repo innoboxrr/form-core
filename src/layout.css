@@ -120,6 +120,53 @@
 .fe-card-body { padding: var(--fe-space-5); }
 .fe-card-sm .fe-card-body { padding: var(--fe-space-3); }
 
+/* ---------- MAQUETACION DE LAS VISTAS GENERADAS ---------- */
+
+/*
+ * Estas tres no son utilidades sueltas: son la forma que tienen las vistas que
+ * genera larapack. Antes se componian con la rejilla fraccionaria de UIkit
+ * —`uk-width-1-3@m uk-width-1-1@s`— repetida en cada stub. Nombrar la
+ * intencion en vez de las fracciones deja que la maquetacion cambie en un
+ * sitio.
+ */
+
+.fe-section {
+    padding: var(--fe-space-5) 0;
+}
+
+.fe-section-sm {
+    padding: var(--fe-space-3) 0;
+}
+
+/* La vista de detalle: ficha a un lado, contenido al otro. */
+.fe-split {
+    display: grid;
+    gap: var(--fe-space-4);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 960px) {
+    .fe-split {
+        grid-template-columns: minmax(16rem, 1fr) 2fr;
+        align-items: start;
+    }
+}
+
+/* Los filtros: tantas columnas como quepan, sin decidir un numero fijo. */
+.fe-filter-grid {
+    display: grid;
+    gap: var(--fe-space-3);
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.fe-filter-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--fe-space-2);
+    margin-top: var(--fe-space-3);
+}
+
 /* ---------- LISTAS ---------- */
 
 .fe-list {

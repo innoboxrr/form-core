@@ -231,6 +231,31 @@
     background: none;
 }
 
+.fe-button-sm {
+    min-height: calc(1.75rem * var(--fe-density));
+    padding: 0 var(--fe-space-2);
+    font-size: var(--fe-text-sm);
+}
+
+/* El icono que va dentro del control, a la izquierda. Sustituye a
+   `uk-form-icon`, que además de la clase traía el componente de iconos de
+   UIkit. */
+.fe-field-icon {
+    position: absolute;
+    top: 50%;
+    left: var(--fe-space-3);
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    color: var(--fe-text-subtle);
+    pointer-events: none;
+}
+
+.fe-field-icon ~ .fe-input,
+.fe-field-icon ~ * .fe-input {
+    padding-left: calc(var(--fe-control-padding-x) * 2.5);
+}
+
 .fe-button-link:hover:not(:disabled) {
     text-decoration: underline;
 }

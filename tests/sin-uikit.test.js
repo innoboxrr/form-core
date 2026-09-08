@@ -9,14 +9,17 @@ import { describe, expect, it } from 'vitest'
  * solo funcionaba dentro de una app que ya lo trajera cargado, y nadie lo
  * decia. Eran 280 usos de 68 clases mas cuatro comportamientos de JavaScript.
  *
- * Este test recorre los cinco paquetes del ecosistema y falla si vuelve a
- * aparecer cualquiera de las dos cosas. Se salta los comentarios: explicar de
- * que se viene no es depender de ello.
+ * Este test revisa lo que tenga a mano. En CI solo esta clonado este
+ * repositorio, asi que cubre form-core; trabajando en el monorepo cubre
+ * ademas los otros cuatro paquetes. Se dice en voz alta cual de los dos casos
+ * es, porque una comprobacion que en realidad no mira nada siempre pasa.
+ *
+ * Se saltan los comentarios: explicar de que se viene no es depender de ello.
  */
 
 const npm = path.dirname(path.dirname(path.dirname(fileURLToPath(import.meta.url))))
 
-const PAQUETES = ['form-core', 'form-elements', 'react-form-elements', 'vue-datatable', 'react-datatable']
+const HERMANOS = ['form-elements', 'react-form-elements', 'vue-datatable', 'react-datatable']
 
 /** Quita comentarios de bloque, de linea y de plantilla HTML. */
 const sinComentarios = (source) =>
@@ -25,41 +28,39 @@ const sinComentarios = (source) =>
         .replace(/\/\*[\s\S]*?\*\//g, '')
         .replace(/^\s*\/\/.*$/gm, '')
 
-const archivos = () => {
-    const encontrados = []
-
-    const recorrer = (dir) => {
-        if (! fs.existsSync(dir)) {
-            return
-        }
-
-        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-            const full = path.join(dir, entry.name)
-
-            if (entry.isDirectory()) {
-                recorrer(full)
-            } else if (/\.(vue|jsx|js|css)$/.test(entry.name)) {
-                encontrados.push(full)
-            }
-        }
+const recorrer = (dir, encontrados = []) => {
+    if (! fs.existsSync(dir)) {
+        return encontrados
     }
 
-    for (const paquete of PAQUETES) {
-        recorrer(path.join(npm, paquete, 'src'))
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const full = path.join(dir, entry.name)
+
+        if (entry.isDirectory()) {
+            recorrer(full, encontrados)
+        } else if (/\.(vue|jsx|js|css)$/.test(entry.name)) {
+            encontrados.push(full)
+        }
     }
 
     return encontrados
 }
 
-describe('el ecosistema no depende de UIkit', () => {
-    const fuentes = archivos().map((file) => [
+const paquetes = ['form-core', ...HERMANOS].filter((name) =>
+    fs.existsSync(path.join(npm, name, 'src'))
+)
+
+const fuentes = paquetes
+    .flatMap((name) => recorrer(path.join(npm, name, 'src')))
+    .map((file) => [
         path.relative(npm, file).split(path.sep).join('/'),
         sinComentarios(fs.readFileSync(file, 'utf8')),
     ])
 
-    it('encuentra los archivos que tiene que revisar', () => {
-        // Una comprobación que no mira nada siempre pasa.
-        expect(fuentes.length).toBeGreaterThan(50)
+describe(`el ecosistema no depende de UIkit (revisando: ${paquetes.join(', ')})`, () => {
+    it('revisa al menos este paquete', () => {
+        expect(paquetes).toContain('form-core')
+        expect(fuentes.length).toBeGreaterThan(4)
     })
 
     it('ninguna clase uk-', () => {

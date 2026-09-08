@@ -535,6 +535,29 @@
     box-shadow: var(--fe-shadow);
 }
 
+/*
+ * Un menú que vive en la capa superior del navegador, con el atributo
+ * `popover`. El navegador ya se encarga de abrirlo, cerrarlo al pulsar fuera,
+ * cerrarlo con Escape y sacarlo por encima de todo; aquí solo hay que quitarle
+ * los estilos que trae de fábrica para que Floating UI pueda colocarlo.
+ */
+.fe-menu[popover] {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    overflow: visible;
+}
+
+.fe-menu[popover]:popover-open {
+    animation: fe-fade-in 120ms ease;
+}
+
+.fe-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 .fe-menu-item {
     display: flex;
     align-items: center;

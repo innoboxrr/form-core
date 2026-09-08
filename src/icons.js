@@ -64,6 +64,17 @@ export const defaultIcons = {
     users: 'fa6-solid:users',
     gift: 'fa6-solid:gift',
     file: 'fa6-solid:file',
+    media: 'fa6-solid:photo-film',
+
+    // EDICION
+    save: 'fa6-solid:floppy-disk',
+    copy: 'fa6-solid:clone',
+    drag: 'fa6-solid:grip-vertical',
+
+    // GRABACION
+    record: 'fa6-solid:microphone',
+    pause: 'fa6-solid:pause',
+    play: 'fa6-solid:play',
 }
 
 /** @type {IconMap} */

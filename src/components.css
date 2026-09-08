@@ -73,6 +73,98 @@
 }
 
 /* ============================================================
+   TOOLTIP
+   ============================================================ */
+
+/*
+ * Sin una linea de JavaScript.
+ *
+ * Los diez tooltips del ecosistema son texto plano —la ayuda de un campo,
+ * «This action is not authorized», «Buscar»—, asi que no hacen falta ni
+ * posicionamiento dinamico ni contenido rico. Antes los pintaba `uk-tooltip`,
+ * que es un componente de UIkit: para una cadena de ayuda arrastraba un
+ * framework entero.
+ *
+ *     <span data-tooltip="Texto de ayuda">…</span>
+ *     <span data-tooltip="Texto" data-tooltip-pos="right">…</span>
+ *
+ * Aparece con el raton y **tambien con el foco**, para que exista para quien
+ * navega con teclado. Un disparador que no sea enfocable de por si necesita
+ * `tabindex="0"`.
+ *
+ * Un lector de pantalla no anuncia el contenido de un `::after`: cuando el
+ * tooltip es la unica etiqueta —un icono suelto— hay que poner ademas un
+ * `aria-label` en el disparador. Es lo que hacen los componentes.
+ */
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    z-index: 60;
+    bottom: calc(100% + var(--fe-space-2));
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 16rem;
+    padding: var(--fe-space-1) var(--fe-space-2);
+    font-family: var(--fe-font);
+    font-size: var(--fe-text-xs);
+    font-weight: 400;
+    line-height: 1.4;
+    white-space: normal;
+    text-align: left;
+    color: var(--fe-text-inverse);
+    background: var(--fe-text);
+    border-radius: var(--fe-radius-sm);
+    box-shadow: var(--fe-shadow);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--fe-transition), visibility var(--fe-transition);
+    pointer-events: none;
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Un tooltip vacio no debe dibujar una caja negra de dos pixeles. */
+[data-tooltip='']::after {
+    content: none;
+}
+
+[data-tooltip-pos='right']::after {
+    bottom: auto;
+    top: 50%;
+    left: calc(100% + var(--fe-space-2));
+    transform: translateY(-50%);
+}
+
+[data-tooltip-pos='left']::after {
+    bottom: auto;
+    top: 50%;
+    left: auto;
+    right: calc(100% + var(--fe-space-2));
+    transform: translateY(-50%);
+}
+
+[data-tooltip-pos='bottom']::after {
+    bottom: auto;
+    top: calc(100% + var(--fe-space-2));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-tooltip]::after {
+        transition: none;
+    }
+}
+
+/* ============================================================
    CONTROLES
    ============================================================ */
 

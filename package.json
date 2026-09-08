@@ -1,12 +1,13 @@
 {
   "name": "innoboxrr-form-core",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "El nucleo agnostico de los formularios innoboxrr: tema, archivos y zonas horarias.",
   "type": "module",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
     "./theme": "./src/theme.js",
+    "./icons": "./src/icons.js",
     "./files": "./src/files.js",
     "./timezone": "./src/timezone.js",
     "./styles": "./styles.css",

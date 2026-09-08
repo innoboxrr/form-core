@@ -19,6 +19,15 @@ export {
 } from './src/theme.js'
 
 export {
+    defaultIcons,
+    getIcon,
+    iconFor,
+    onIconChange,
+    resetIcons,
+    setIcons,
+} from './src/icons.js'
+
+export {
     FILE_ICON,
     describeFiles,
     errorsFor,

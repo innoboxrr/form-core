@@ -1,6 +1,6 @@
 {
   "name": "innoboxrr-form-core",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "El nucleo agnostico de la interfaz innoboxrr: tema, iconos, estilos, archivos y zonas horarias.",
   "type": "module",
   "main": "index.js",

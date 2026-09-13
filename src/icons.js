@@ -41,8 +41,12 @@ export const defaultIcons = {
     hide: 'fa6-solid:eye-slash',
     actions: 'fa6-solid:gears',
     refresh: 'fa6-solid:rotate',
+    restore: 'fa6-solid:rotate-left',
     search: 'fa6-solid:magnifying-glass',
     filter: 'fa6-solid:filter',
+    more: 'fa6-solid:ellipsis',
+    external: 'fa6-solid:arrow-up-right-from-square',
+    logout: 'fa6-solid:right-from-bracket',
 
     // ESTADO
     help: 'fa6-solid:circle-question',
@@ -58,6 +62,18 @@ export const defaultIcons = {
     up: 'fa6-solid:chevron-up',
     down: 'fa6-solid:chevron-down',
     close: 'fa6-solid:xmark',
+    home: 'fa6-solid:house',
+    menu: 'fa6-solid:bars',
+    sidebar: 'fa6-solid:table-columns',
+    command: 'fa6-solid:terminal',
+    settings: 'fa6-solid:gear',
+
+    // SELECCION Y ORDEN
+    check: 'fa6-solid:check',
+    minus: 'fa6-solid:minus',
+    sort: 'fa6-solid:sort',
+    sortUp: 'fa6-solid:sort-up',
+    sortDown: 'fa6-solid:sort-down',
 
     // OBJETOS
     box: 'fa6-solid:box',

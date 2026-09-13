@@ -67,7 +67,7 @@ setTheme({
 | Avisos | `toast`, `toastSuccess`, `toastDanger`, `toastWarning`, `toastTitle`, `toastClose`, `toastRegion` |
 | Tabla | `table`, `tableNumeric`, `tableSticky`, `tableSelect`, `tableResizer`, `tableEmpty`, `bulkBar`, `bulkCount`, `tableSort`, `tableContainer`, `tableFooter`, `tablePager` |
 | Listado | `datatable`, `datatableFilters`, `toolbarSpacer` |
-| Campos compuestos | `fileDrop`, `fileDropHint`, `avatarPreview`, `codeInput`, `codeCell`, `group`, `groupTitle`, `dragHandle`, `iconButtonDanger` |
+| Campos compuestos | `fileDrop`, `fileDropHint`, `avatarPreview`, `codeInput`, `codeCell`, `group`, `groupTitle`, `dragHandle`, `iconButtonDanger`, `phone`, `phoneInvalid` |
 | Edición en línea | `editable` |
 | Shell de aplicación | `shell`, `shellHeader`, `shellSidebar`, `shellMain` |
 

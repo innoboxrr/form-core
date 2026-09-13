@@ -81,6 +81,49 @@ describe('medidas', () => {
     })
 })
 
+describe('listados', () => {
+    /**
+     * Ordenar con el teclado exige un botón dentro del <th>. Sin reset se vería
+     * como un botón del navegador en mitad de la cabecera, con otra fuente y
+     * sin las mayúsculas del resto.
+     */
+    it('el boton de ordenar se lee como el resto de la cabecera', () => {
+        const sort = rule('.fe-table-sort')
+
+        expect(sort).toMatch(/font:\s*inherit/)
+        expect(sort).toMatch(/text-transform:\s*inherit/)
+        expect(sort).toMatch(/background:\s*none/)
+        expect(sort).toMatch(/border:\s*none/)
+    })
+
+    it('el boton de ordenar enseña el foco', () => {
+        expect(rule('.fe-table-sort:focus-visible')).toMatch(/outline:/)
+    })
+
+    /**
+     * Una tabla más ancha que la pantalla ensanchaba la página entera. Se
+     * desplaza su contenedor, no el documento.
+     */
+    it('la tabla se desplaza dentro de su contenedor', () => {
+        expect(rule('.fe-table-container')).toMatch(/overflow:\s*auto/)
+        expect(rule('.fe-table-container')).toMatch(/max-height:\s*var\(--fe-table-max-height/)
+    })
+
+    /**
+     * .fe-select ocupa todo el ancho en un formulario; en el paginador eso
+     * empujaría las flechas fuera de la línea.
+     */
+    it('el selector de pagina no ocupa todo el ancho', () => {
+        expect(rule('.fe-table-pager .fe-select')).toMatch(/width:\s*auto/)
+    })
+
+    it('cada token del listado tiene su regla', () => {
+        for (const selector of ['.fe-datatable', '.fe-datatable-filters', '.fe-table-footer', '.fe-table-pager', '.fe-toolbar-spacer']) {
+            expect(rule(selector), `falta la regla ${selector}`).not.toBeNull()
+        }
+    })
+})
+
 describe('capas', () => {
     /**
      * Cada componente elegía su número —60 el tooltip, 1015 el select de

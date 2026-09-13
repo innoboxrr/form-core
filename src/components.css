@@ -1166,6 +1166,94 @@
     font-variant-numeric: tabular-nums;
 }
 
+/*
+ * Ordenar tiene que poderse hacer con el teclado, así que dentro del <th> va
+ * un botón. Hereda todo de la cabecera para no parecer un botón del navegador.
+ */
+.fe-table-sort {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fe-space-1);
+    padding: 0;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.fe-table-sort:focus-visible {
+    outline: 2px solid var(--fe-focus);
+    outline-offset: 2px;
+    border-radius: var(--fe-radius-sm);
+}
+
+/* Mientras llega la página siguiente, la actual se sigue viendo, atenuada. */
+.fe-table[aria-busy='true'] tbody {
+    opacity: 0.6;
+}
+
+/*
+ * Una tabla más ancha que la pantalla se desplaza dentro de su contenedor, no
+ * ensancha la página. Con una altura máxima, la cabecera fija también funciona
+ * al bajar por un listado largo.
+ */
+.fe-table-container {
+    max-width: 100%;
+    max-height: var(--fe-table-max-height);
+    overflow: auto;
+}
+
+/* ============================================================
+   LISTADO
+   ============================================================ */
+
+/* Barra, filtros, tabla y pie de un listado, uno debajo de otro. */
+.fe-datatable {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* Lo que va detrás del separador en una barra se queda a la derecha. */
+.fe-toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.fe-datatable > .fe-bulk-bar {
+    margin: var(--fe-space-2);
+}
+
+.fe-datatable-filters {
+    padding: var(--fe-space-4);
+    border-bottom: 1px solid var(--fe-border);
+}
+
+.fe-table-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fe-space-3);
+    padding: var(--fe-space-2) var(--fe-space-4);
+    font-size: var(--fe-text-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--fe-text-muted);
+}
+
+.fe-table-pager {
+    display: flex;
+    align-items: center;
+    gap: var(--fe-space-2);
+}
+
+/* En un formulario ocupa todo el ancho; aquí empujaría las flechas fuera. */
+.fe-table-pager .fe-select {
+    width: auto;
+}
+
 /* ============================================================
    EDICION EN LINEA
    ============================================================ */

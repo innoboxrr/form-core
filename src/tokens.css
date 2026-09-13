@@ -128,6 +128,9 @@
     --fe-drawer-width: 32rem;
     --fe-command-width: 40rem;
     --fe-sidebar-width: 15rem;
+    /* Sin límite, la tabla crece con sus filas; con uno, la cabecera fija
+       funciona también al bajar por el listado. */
+    --fe-table-max-height: none;
 }
 
 /* La elección explícita de claro gana sobre un sistema en oscuro, de ahí el

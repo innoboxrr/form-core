@@ -128,6 +128,13 @@ export const defaultTheme = {
     tableEmpty: 'fe-table-empty',
     bulkBar: 'fe-bulk-bar',
     bulkCount: 'fe-bulk-count',
+    tableSort: 'fe-table-sort',
+    tableContainer: 'fe-table-container',
+    tableFooter: 'fe-table-footer',
+    tablePager: 'fe-table-pager',
+    datatable: 'fe-datatable',
+    datatableFilters: 'fe-datatable-filters',
+    toolbarSpacer: 'fe-toolbar-spacer',
 
     // EDICION EN LINEA
     editable: 'fe-editable',

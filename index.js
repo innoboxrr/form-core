@@ -1,11 +1,12 @@
 /**
  * innoboxrr-form-core
  *
- * Lo que comparten innoboxrr-form-elements y innoboxrr-react-form-elements y
- * no depende de ningun framework: el tema, la validacion de archivos y la
- * lista de zonas horarias.
+ * Lo que comparten los paquetes de interfaz innoboxrr —los componentes de Vue
+ * y de React y los dos datatables— y no depende de ningun framework: el tema,
+ * los iconos, los avisos y confirmaciones, la validacion de archivos y la lista
+ * de zonas horarias.
  *
- * Estaba duplicado en los dos paquetes, que es exactamente como dos copias
+ * Estaba duplicado en los paquetes, que es exactamente como dos copias
  * empiezan a divergir.
  */
 
@@ -26,6 +27,21 @@ export {
     resetIcons,
     setIcons,
 } from './src/icons.js'
+
+export {
+    confirmAction,
+    dismiss,
+    getConfirmation,
+    getToasts,
+    notify,
+    notifyError,
+    notifySuccess,
+    onConfirmationChange,
+    onToastsChange,
+    resetConfirmation,
+    resetToasts,
+    resolveConfirmation,
+} from './src/feedback.js'
 
 export {
     FILE_ICON,

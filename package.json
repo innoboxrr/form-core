@@ -8,6 +8,7 @@
     ".": "./index.js",
     "./theme": "./src/theme.js",
     "./icons": "./src/icons.js",
+    "./feedback": "./src/feedback.js",
     "./files": "./src/files.js",
     "./timezone": "./src/timezone.js",
     "./styles": "./styles.css",

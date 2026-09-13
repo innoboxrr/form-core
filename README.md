@@ -65,7 +65,8 @@ setTheme({
 | Menús | `menu`, `menuList`, `menuItem`, `menuItemDanger`, `menuSeparator`, `menuLabel` |
 | Paleta de comandos | `command`, `commandInput`, `commandList`, `commandGroup`, `commandItem`, `commandEmpty` |
 | Avisos | `toast`, `toastSuccess`, `toastDanger`, `toastWarning`, `toastTitle`, `toastClose`, `toastRegion` |
-| Tabla | `table`, `tableNumeric`, `tableSticky`, `tableSelect`, `tableResizer`, `tableEmpty`, `bulkBar`, `bulkCount` |
+| Tabla | `table`, `tableNumeric`, `tableSticky`, `tableSelect`, `tableResizer`, `tableEmpty`, `bulkBar`, `bulkCount`, `tableSort`, `tableContainer`, `tableFooter`, `tablePager` |
+| Listado | `datatable`, `datatableFilters`, `toolbarSpacer` |
 | Edición en línea | `editable` |
 | Shell de aplicación | `shell`, `shellHeader`, `shellSidebar`, `shellMain` |
 
@@ -113,7 +114,16 @@ Los componentes de Vue y React envuelven exactamente este marcado.
 - **Menús**: `fe-menu` con `popover`, colocado con Floating UI.
 - **Tabla**: `fe-table-select` para la columna de casillas, `data-selected` en
   la fila, `fe-bulk-bar` para lo que se hace con la selección y
-  `fe-table-resizer` para cambiar el ancho de una columna.
+  `fe-table-resizer` para cambiar el ancho de una columna. Una columna
+  ordenable lleva `aria-sort` en el `<th>` y dentro un `<button
+  class="fe-table-sort">`, para que se ordene también con el teclado.
+- **Listado**: `fe-datatable` agrupa la `fe-toolbar` (con un
+  `fe-toolbar-spacer` que empuja lo que va a la derecha), el panel
+  `fe-datatable-filters`, la tabla dentro de un `fe-table-container` y el
+  `fe-table-footer` con el resumen y el `fe-table-pager`. El contenedor se
+  desplaza en horizontal cuando la tabla no cabe; para que además la cabecera
+  fija funcione al bajar, dale una altura máxima con
+  `--fe-table-max-height: 70vh`.
 
 Un `<dialog>` cerrado está oculto porque el navegador le pone `display: none`;
 por eso ninguna regla fija `display` fuera del estado `[open]`. Las capas que no

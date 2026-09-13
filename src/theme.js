@@ -46,6 +46,14 @@ export const defaultTheme = {
     checkbox: 'fe-checkbox',
     radio: 'fe-radio',
     file: 'fe-file',
+    fileDrop: 'fe-file-drop',
+    fileDropHint: 'fe-file-drop-hint',
+    avatarPreview: 'fe-avatar-preview',
+    codeInput: 'fe-code-input',
+    codeCell: 'fe-code-cell',
+    group: 'fe-group',
+    groupTitle: 'fe-group-title',
+    dragHandle: 'fe-drag-handle',
 
     // BOTONES
     button: 'fe-button',
@@ -53,6 +61,7 @@ export const defaultTheme = {
     buttonDanger: 'fe-button-danger',
     buttonLink: 'fe-button-link',
     iconButton: 'fe-icon-button',
+    iconButtonDanger: 'fe-icon-button-danger',
 
     // NAVEGACION Y ACCIONES
     breadcrumb: 'fe-breadcrumb',

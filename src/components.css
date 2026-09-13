@@ -1255,6 +1255,147 @@
 }
 
 /* ============================================================
+   CAMPOS COMPUESTOS
+   ============================================================ */
+
+/*
+ * La zona para soltar archivos. Se resalta al pasar el ratón, al enfocarla y
+ * mientras se arrastra algo encima (`data-dragging="true"`).
+ */
+.fe-file-drop {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--fe-space-2);
+    width: 100%;
+    padding: var(--fe-space-6) var(--fe-space-4);
+    font-size: var(--fe-text-sm);
+    text-align: center;
+    color: var(--fe-text-muted);
+    background: var(--fe-surface);
+    border: 2px dashed var(--fe-border-strong);
+    border-radius: var(--fe-radius-lg);
+    cursor: pointer;
+    transition: border-color var(--fe-transition), background var(--fe-transition);
+}
+
+.fe-file-drop p {
+    margin: 0;
+}
+
+.fe-file-drop:hover,
+.fe-file-drop[data-dragging='true'] {
+    border-color: var(--fe-primary);
+    background: var(--fe-primary-soft);
+}
+
+.fe-file-drop:focus-visible {
+    outline: 2px solid var(--fe-focus);
+    outline-offset: 2px;
+}
+
+.fe-file-drop-hint {
+    font-size: var(--fe-text-xs);
+    color: var(--fe-text-subtle);
+}
+
+/* La miniatura de un avatar, que se pulsa para cambiarlo. */
+.fe-avatar-preview {
+    box-sizing: border-box;
+    width: 6rem;
+    height: 6rem;
+    object-fit: cover;
+    border: 2px solid var(--fe-border);
+    border-radius: var(--fe-radius-full);
+    box-shadow: var(--fe-shadow);
+    cursor: pointer;
+    transition: border-color var(--fe-transition);
+}
+
+.fe-avatar-preview:hover {
+    border-color: var(--fe-primary);
+}
+
+.fe-avatar-preview:focus-visible {
+    outline: 2px solid var(--fe-focus);
+    outline-offset: 2px;
+}
+
+/* Las casillas de un código de un solo uso. */
+.fe-code-input {
+    display: flex;
+    justify-content: center;
+    gap: var(--fe-space-2);
+}
+
+.fe-code-cell {
+    box-sizing: border-box;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    font-family: var(--fe-font);
+    font-size: var(--fe-text-lg);
+    text-align: center;
+    color: var(--fe-text);
+    background: var(--fe-surface);
+    border: 1px solid var(--fe-border-strong);
+    border-radius: var(--fe-radius);
+    appearance: textfield;
+    transition: border-color var(--fe-transition), box-shadow var(--fe-transition);
+}
+
+.fe-code-cell:focus {
+    outline: none;
+    border-color: var(--fe-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--fe-focus) 22%, transparent);
+    caret-color: var(--fe-focus);
+}
+
+.fe-code-cell::-webkit-outer-spin-button,
+.fe-code-cell::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+/*
+ * Un grupo de campos que se repite. Cada elemento es una superficie con su
+ * barra: el tirador para ordenarlo, el título y las acciones.
+ */
+.fe-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--fe-space-2);
+}
+
+.fe-group-title {
+    margin: 0;
+    font-size: var(--fe-text-base);
+    font-weight: 600;
+    color: var(--fe-text);
+}
+
+.fe-drag-handle {
+    cursor: grab;
+    touch-action: none;
+}
+
+.fe-drag-handle:active {
+    cursor: grabbing;
+}
+
+/* Va después del botón de icono genérico para ganarle el color al pasar. */
+.fe-icon-button-danger {
+    color: var(--fe-danger);
+}
+
+.fe-icon-button-danger:hover:not(:disabled) {
+    color: var(--fe-danger);
+    background: var(--fe-danger-soft);
+}
+
+/* ============================================================
    EDICION EN LINEA
    ============================================================ */
 

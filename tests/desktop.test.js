@@ -124,6 +124,59 @@ describe('listados', () => {
     })
 })
 
+describe('campos compuestos', () => {
+    /**
+     * FileDropInputComponent, AvatarInputComponent y CodeInputComponent de la
+     * rama React ya pintaban estas clases, y ninguna hoja las definía: salían
+     * sin estilo. La rama Vue las dibujaba con Tailwind, que el paquete no
+     * declara.
+     */
+    it('cada pieza tiene su regla', () => {
+        for (const selector of [
+            '.fe-file-drop',
+            '.fe-file-drop-hint',
+            '.fe-avatar-preview',
+            '.fe-code-input',
+            '.fe-code-cell',
+            '.fe-group',
+            '.fe-group-title',
+            '.fe-drag-handle',
+            '.fe-icon-button-danger',
+        ]) {
+            expect(rule(selector), `falta la regla ${selector}`).not.toBeNull()
+        }
+    })
+
+    it('los colores salen de los tokens, no de valores escritos', () => {
+        for (const selector of ['.fe-file-drop', '.fe-avatar-preview', '.fe-code-cell', '.fe-group-title', '.fe-icon-button-danger']) {
+            expect(rule(selector), `${selector} escribe un color`).not.toMatch(/#[0-9a-f]{3,8}\b|rgba?\(/i)
+        }
+    })
+
+    it('la zona de archivos se ve al arrastrar encima y al enfocarla', () => {
+        expect(components).toMatch(/\.fe-file-drop\[data-dragging='true'\]/)
+        expect(rule('.fe-file-drop:focus-visible')).toMatch(/outline:/)
+    })
+
+    it('las casillas del código no enseñan las flechas de un campo numérico', () => {
+        expect(components).toMatch(/\.fe-code-cell::-webkit-inner-spin-button/)
+    })
+
+    it('lo que ocupa su caja no depende del reset del anfitrión', () => {
+        for (const selector of ['.fe-file-drop', '.fe-avatar-preview', '.fe-code-cell']) {
+            expect(rule(selector), `${selector} sin box-sizing`).toMatch(/box-sizing:\s*border-box/)
+        }
+    })
+
+    /**
+     * El botón rojo de borrar tiene que ganar al hover genérico del botón de
+     * icono, que va antes en la hoja con la misma especificidad.
+     */
+    it('el boton de icono de peligro va despues del generico', () => {
+        expect(components.indexOf('.fe-icon-button-danger')).toBeGreaterThan(components.indexOf('.fe-icon-button:hover:not(:disabled)'))
+    })
+})
+
 describe('capas', () => {
     /**
      * Cada componente elegía su número —60 el tooltip, 1015 el select de

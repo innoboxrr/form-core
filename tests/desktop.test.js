@@ -177,6 +177,58 @@ describe('campos compuestos', () => {
     })
 })
 
+describe('telefono', () => {
+    /**
+     * CountrySelectInputComponent envuelve vue-tel-input en Vue y
+     * react-phone-number-input en React. El de React salía como un <select> y
+     * un <input> nativos, y el de Vue con clases de Tailwind y colores
+     * escritos; ninguno seguía el tema ni el modo oscuro.
+     */
+    const PHONE = [
+        '.fe-phone',
+        '.fe-phone:focus-within',
+        '.fe-phone-invalid',
+        '.fe-phone input',
+        '.fe-phone.PhoneInput',
+        '.fe-phone.vue-tel-input',
+        '.fe-phone.vue-tel-input:focus-within',
+        '.fe-phone .vti__dropdown-list',
+        '.fe-phone .vti__dropdown-item.highlighted',
+    ]
+
+    it('cada pieza tiene su regla', () => {
+        for (const selector of PHONE) {
+            expect(rule(selector), `falta la regla ${selector}`).not.toBeNull()
+        }
+    })
+
+    it('los colores salen de los tokens, no de valores escritos', () => {
+        for (const selector of PHONE) {
+            expect(rule(selector), `${selector} escribe un color`).not.toMatch(/#[0-9a-f]{3,8}\b|rgba?\(/i)
+        }
+    })
+
+    it('se ve como un campo: mide lo mismo, enseña el foco y marca el error', () => {
+        expect(rule('.fe-phone')).toMatch(/box-sizing:\s*border-box/)
+        expect(rule('.fe-phone')).toMatch(/min-height:\s*var\(--fe-control-height\)/)
+        expect(rule('.fe-phone:focus-within')).toMatch(/var\(--fe-focus\)/)
+        expect(rule('.fe-phone-invalid')).toMatch(/var\(--fe-danger\)/)
+    })
+
+    /**
+     * La hoja de vue-tel-input declara `.vue-tel-input` con la misma
+     * especificidad que `.fe-phone` y se carga después.
+     */
+    it('en Vue gana al borde y al foco de la libreria', () => {
+        expect(rule('.fe-phone.vue-tel-input')).toMatch(/border:/)
+        expect(rule('.fe-phone.vue-tel-input:focus-within')).toMatch(/box-shadow:/)
+    })
+
+    it('la lista de paises vive en la capa de los desplegables', () => {
+        expect(rule('.fe-phone .vti__dropdown-list')).toMatch(/z-index:\s*var\(--fe-z-dropdown\)/)
+    })
+})
+
 describe('capas', () => {
     /**
      * Cada componente elegía su número —60 el tooltip, 1015 el select de

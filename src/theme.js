@@ -54,6 +54,8 @@ export const defaultTheme = {
     group: 'fe-group',
     groupTitle: 'fe-group-title',
     dragHandle: 'fe-drag-handle',
+    phone: 'fe-phone',
+    phoneInvalid: 'fe-phone-invalid',
 
     // BOTONES
     button: 'fe-button',

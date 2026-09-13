@@ -1396,6 +1396,138 @@
 }
 
 /* ============================================================
+   TELEFONO
+   vue-tel-input y react-phone-number-input dibujan su propio marcado con
+   colores escritos (borde #bbb, foco #66afe9, lista con fondo blanco), y el de
+   React ni siquiera tiene forma sin su hoja. Aquí se les da la de un fe-input,
+   con los colores de los tokens, también en oscuro.
+   ============================================================ */
+
+.fe-phone {
+    box-sizing: border-box;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    min-height: var(--fe-control-height);
+    font-family: var(--fe-font);
+    font-size: var(--fe-text-base);
+    color: var(--fe-text);
+    background: var(--fe-surface);
+    border: 1px solid var(--fe-border);
+    border-radius: var(--fe-radius);
+    transition: border-color var(--fe-transition), box-shadow var(--fe-transition);
+}
+
+.fe-phone:hover {
+    border-color: var(--fe-border-strong);
+}
+
+.fe-phone:focus-within {
+    border-color: var(--fe-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--fe-focus) 22%, transparent);
+}
+
+.fe-phone-invalid {
+    border-color: var(--fe-danger);
+}
+
+.fe-phone input {
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 0;
+    padding: 0 var(--fe-control-padding-x);
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    outline: none;
+}
+
+.fe-phone input::placeholder {
+    color: var(--fe-text-subtle);
+}
+
+.fe-phone input:disabled {
+    color: var(--fe-text-subtle);
+    cursor: not-allowed;
+}
+
+/* react-phone-number-input: la bandera y la flecha, sobre un <select> nativo
+   invisible. Se ajusta con sus propias variables. */
+.fe-phone.PhoneInput {
+    --PhoneInput-color--focus: var(--fe-focus);
+    --PhoneInputCountryFlag-borderColor: var(--fe-border-strong);
+    --PhoneInputCountrySelectArrow-color: var(--fe-text-subtle);
+    --PhoneInputCountrySelectArrow-opacity: 1;
+    align-items: center;
+    padding-left: var(--fe-control-padding-x);
+}
+
+/* vue-tel-input declara su borde y su foco con la misma especificidad y su
+   hoja se carga después: sin el selector doble, ganaría la suya. */
+.fe-phone.vue-tel-input {
+    border: 1px solid var(--fe-border);
+    border-radius: var(--fe-radius);
+}
+
+.fe-phone.vue-tel-input:hover {
+    border-color: var(--fe-border-strong);
+}
+
+.fe-phone.vue-tel-input:focus-within {
+    border-color: var(--fe-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--fe-focus) 22%, transparent);
+}
+
+.fe-phone.vue-tel-input.fe-phone-invalid {
+    border-color: var(--fe-danger);
+}
+
+.fe-phone .vti__dropdown {
+    padding: 0 var(--fe-space-2) 0 var(--fe-control-padding-x);
+    border-radius: var(--fe-radius) 0 0 var(--fe-radius);
+}
+
+.fe-phone .vti__dropdown:hover,
+.fe-phone .vti__dropdown.open {
+    background: var(--fe-surface-hover);
+}
+
+.fe-phone .vti__selection .vti__country-code,
+.fe-phone .vti__dropdown-arrow {
+    color: var(--fe-text-subtle);
+}
+
+.fe-phone .vti__dropdown-list {
+    z-index: var(--fe-z-dropdown);
+    width: max-content;
+    max-width: min(24rem, 90vw);
+    color: var(--fe-text);
+    background: var(--fe-surface-raised);
+    border: 1px solid var(--fe-border);
+    border-radius: var(--fe-radius);
+    box-shadow: var(--fe-shadow);
+}
+
+.fe-phone .vti__dropdown-list.below {
+    top: calc(100% + var(--fe-space-1));
+}
+
+.fe-phone .vti__dropdown-item.highlighted {
+    background: var(--fe-surface-hover);
+}
+
+.fe-phone .vti__dropdown-item.last-preferred {
+    border-bottom-color: var(--fe-border);
+}
+
+.fe-phone .vti__search_box {
+    width: 100%;
+    min-height: var(--fe-control-height);
+    border-bottom: 1px solid var(--fe-border);
+}
+
+/* ============================================================
    EDICION EN LINEA
    ============================================================ */
 

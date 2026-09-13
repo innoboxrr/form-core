@@ -133,6 +133,38 @@ iconFor('plus')      // 'lucide:plus'
 iconFor('mdi:home')  // un nombre completo pasa tal cual
 ```
 
+## Avisos y confirmaciones
+
+Estado de toda la aplicación, fuera del framework: quien avisa —un store, el
+contrato de un modelo, la tabla— no necesita saber si detrás hay Vue o React.
+Los paquetes de componentes lo pintan con su región de avisos y su anfitrión de
+confirmaciones, que la aplicación monta una vez.
+
+```js
+import { notify, notifySuccess, notifyError, confirmAction } from 'innoboxrr-form-core'
+
+notifySuccess('Producto creado')
+notifyError('No se pudo guardar', { title: 'Producto' })
+notify({ message: 'Exportación en curso', variant: 'info', duration: 8000 })
+
+if (await confirmAction({ message: '¿Borrar el producto?', variant: 'danger' })) {
+    // …
+}
+```
+
+- Un aviso se va a los cinco segundos; **uno de peligro se queda** hasta que se
+  cierra, porque quien no lo leyó a tiempo no sabría qué falló. `duration: 0` lo
+  deja fijo.
+- No se apilan más de cinco: sale el más antiguo.
+- `confirmAction` resuelve `true` o `false`. Una pregunta nueva con otra
+  pendiente da la anterior por cancelada.
+- Sin un anfitrión montado, `confirmAction` usa `window.confirm`: una promesa que
+  no se resolviera dejaría colgada la acción que la espera.
+
+Para pintarlos desde otro sitio: `getToasts`, `onToastsChange`, `dismiss`,
+`getConfirmation`, `onConfirmationChange` y `resolveConfirmation`. `resetToasts`
+y `resetConfirmation` vacían el estado entre pruebas.
+
 ## Archivos
 
 ```js

@@ -43,6 +43,44 @@ describe('dialogos y drawers sobre <dialog>', () => {
     })
 })
 
+describe('medidas', () => {
+    /**
+     * Visto en un navegador: sin un reset global de border-box, un .fe-input
+     * con width: 100% y padding medía más que el cuerpo del drawer y le sacaba
+     * una barra de desplazamiento horizontal. jsdom no mide, así que ningún test
+     * de componentes lo habría visto.
+     */
+    it('lo que ocupa todo el ancho no depende de un reset del anfitrion', () => {
+        for (const selector of ['.fe-dialog', '.fe-drawer', '.fe-command-input', '.fe-icon-button']) {
+            expect(rule(selector), `${selector} sin box-sizing`).toMatch(/box-sizing:\s*border-box/)
+        }
+
+        expect(components).toMatch(/\.fe-input,\s*\.fe-select,\s*\.fe-textarea,\s*\.fe-file\s*\{[^}]*box-sizing:\s*border-box/)
+    })
+
+    /**
+     * También visto en el navegador: un <li> de la paleta con width: 100% y
+     * padding sacaba una barra horizontal en la lista.
+     */
+    it('los elementos de lista que ocupan todo el ancho tampoco se desbordan', () => {
+        for (const selector of ['.fe-command-item', '.fe-menu-item']) {
+            expect(rule(selector), `${selector} sin box-sizing`).toMatch(/box-sizing:\s*border-box/)
+        }
+    })
+
+    /**
+     * El valor editable es un <button>, y el navegador le pone fondo gris,
+     * borde y su propia fuente. Tiene que leerse como el texto que muestra.
+     */
+    it('el valor editable no se ve como un boton del navegador', () => {
+        const editable = rule('.fe-editable')
+
+        expect(editable).toMatch(/font:\s*inherit/)
+        expect(editable).toMatch(/background:\s*none/)
+        expect(editable).toMatch(/border:\s*none/)
+    })
+})
+
 describe('capas', () => {
     /**
      * Cada componente elegía su número —60 el tooltip, 1015 el select de

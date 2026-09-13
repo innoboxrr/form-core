@@ -172,6 +172,10 @@
 .fe-select,
 .fe-textarea,
 .fe-file {
+    /* Con width: 100% y padding, sin border-box el control mide más que su
+       contenedor. Una aplicación que ya pone border-box a todo no lo nota; una
+       que no, ve una barra de desplazamiento en cada drawer. */
+    box-sizing: border-box;
     width: 100%;
     min-height: var(--fe-control-height);
     padding: 0 var(--fe-control-padding-x);
@@ -271,6 +275,7 @@
 .fe-button-secondary,
 .fe-button-danger,
 .fe-button-link {
+    box-sizing: border-box;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -332,6 +337,7 @@
 /* Un botón que solo lleva un icono: cerrar un diálogo, abrir el menú de una
    fila. Cuadrado, para que el objetivo no dependa del ancho del glifo. */
 .fe-icon-button {
+    box-sizing: border-box;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -625,6 +631,7 @@
 }
 
 .fe-dialog {
+    box-sizing: border-box;
     width: min(var(--fe-dialog-width), calc(100vw - 2 * var(--fe-space-4)));
     max-height: 85vh;
     padding: 0;
@@ -694,6 +701,7 @@
 /* Un drawer es un <dialog> pegado a un borde. El formulario de crear o
    editar se abre aquí y la tabla sigue a la vista, detrás. */
 .fe-drawer {
+    box-sizing: border-box;
     width: min(var(--fe-drawer-width), 100vw);
     max-width: 100vw;
     height: 100dvh;
@@ -803,6 +811,7 @@
 }
 
 .fe-menu-item {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     gap: var(--fe-space-2);
@@ -892,6 +901,7 @@
 }
 
 .fe-command-input {
+    box-sizing: border-box;
     width: 100%;
     min-height: calc(var(--fe-control-height) * 1.4);
     padding: 0 var(--fe-space-5);
@@ -928,6 +938,7 @@
 }
 
 .fe-command-item {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     gap: var(--fe-space-3);
@@ -1168,6 +1179,14 @@
     min-height: 1.5em;
     padding: 0 var(--fe-space-1);
     margin: 0 calc(-1 * var(--fe-space-1));
+    /* Es un <button> para que se alcance con teclado, pero tiene que leerse
+       como el texto que muestra: sin el fondo, el borde ni la fuente que el
+       navegador le pone a un botón. */
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    background: none;
+    border: none;
     border-radius: var(--fe-radius-sm);
     border-bottom: 1px dashed transparent;
     cursor: text;

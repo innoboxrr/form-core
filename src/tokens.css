@@ -51,7 +51,14 @@
     --fe-warning: #8a6212;
     --fe-warning-soft: #f8f0dd;
 
+    --fe-info: #1f6fb2;
+    --fe-info-soft: #e5f0f9;
+
     --fe-focus: #4b5bd7;
+
+    /* Lo que queda detrás de un diálogo o un drawer abierto. Era un rgba
+       escrito dentro de .fe-overlay, igual en claro que en oscuro. */
+    --fe-overlay: rgba(16, 18, 27, 0.45);
 
     /* ---------- FORMA ---------- */
 
@@ -97,6 +104,30 @@
     /* ---------- MOVIMIENTO ---------- */
 
     --fe-transition: 120ms ease;
+    --fe-duration-fast: 120ms;
+    --fe-duration: 200ms;
+    /* Rápido al empezar y suave al llegar: lo que se abre tiene que sentirse
+       inmediato, no animado. */
+    --fe-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+    /* ---------- CAPAS ---------- */
+
+    /* Un orden y no un número por componente. Lo que se abre con showModal() o
+       con el atributo popover ya vive en la capa superior del navegador y no
+       necesita z-index; esto es para lo que no: la cabecera fija de una tabla,
+       un overlay dibujado a mano, los tooltips. */
+    --fe-z-sticky: 10;
+    --fe-z-dropdown: 40;
+    --fe-z-overlay: 50;
+    --fe-z-tooltip: 60;
+    --fe-z-toast: 70;
+
+    /* ---------- MEDIDAS DE APLICACION ---------- */
+
+    --fe-dialog-width: 32rem;
+    --fe-drawer-width: 32rem;
+    --fe-command-width: 40rem;
+    --fe-sidebar-width: 15rem;
 }
 
 /* La elección explícita de claro gana sobre un sistema en oscuro, de ahí el
@@ -133,7 +164,12 @@
         --fe-warning: #d9ac53;
         --fe-warning-soft: #2a2417;
 
+        --fe-info: #7cb3e6;
+        --fe-info-soft: #16222e;
+
         --fe-focus: #8b95f0;
+
+        --fe-overlay: rgba(0, 0, 0, 0.6);
 
         --fe-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
         --fe-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
@@ -173,7 +209,12 @@
     --fe-warning: #d9ac53;
     --fe-warning-soft: #2a2417;
 
+    --fe-info: #7cb3e6;
+    --fe-info-soft: #16222e;
+
     --fe-focus: #8b95f0;
+
+    --fe-overlay: rgba(0, 0, 0, 0.6);
 
     --fe-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --fe-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);

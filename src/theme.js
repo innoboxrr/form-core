@@ -52,6 +52,7 @@ export const defaultTheme = {
     buttonSecondary: 'fe-button-secondary',
     buttonDanger: 'fe-button-danger',
     buttonLink: 'fe-button-link',
+    iconButton: 'fe-icon-button',
 
     // NAVEGACION Y ACCIONES
     breadcrumb: 'fe-breadcrumb',
@@ -61,25 +62,81 @@ export const defaultTheme = {
     actionMenu: 'fe-action-menu',
     actionMenuItem: 'fe-action-item',
     actionMenuDanger: 'fe-action-danger',
+    kbd: 'fe-kbd',
 
     // SUPERFICIES Y PIEZAS DE APLICACION
     surface: 'fe-surface',
     surfaceRaised: 'fe-surface-raised',
     toolbar: 'fe-toolbar',
     badge: 'fe-badge',
+    badgePrimary: 'fe-badge-primary',
+    badgeSuccess: 'fe-badge-success',
+    badgeDanger: 'fe-badge-danger',
+    badgeWarning: 'fe-badge-warning',
     skeleton: 'fe-skeleton',
+    skeletonText: 'fe-skeleton-text',
+    skeletonCircle: 'fe-skeleton-circle',
+    skeletonBlock: 'fe-skeleton-block',
+
+    // DIALOGOS Y DRAWERS, sobre <dialog> y showModal()
     overlay: 'fe-overlay',
     dialog: 'fe-dialog',
+    dialogSmall: 'fe-dialog-sm',
+    dialogLarge: 'fe-dialog-lg',
+    dialogHeader: 'fe-dialog-header',
+    dialogTitle: 'fe-dialog-title',
+    dialogBody: 'fe-dialog-body',
+    dialogFooter: 'fe-dialog-footer',
     drawer: 'fe-drawer',
+    drawerStart: 'fe-drawer-start',
+    drawerHeader: 'fe-drawer-header',
+    drawerTitle: 'fe-drawer-title',
+    drawerBody: 'fe-drawer-body',
+    drawerFooter: 'fe-drawer-footer',
+
+    // MENUS, sobre el atributo popover
     menu: 'fe-menu',
+    menuList: 'fe-menu-list',
     menuItem: 'fe-menu-item',
+    menuItemDanger: 'fe-menu-item-danger',
+    menuSeparator: 'fe-menu-separator',
+    menuLabel: 'fe-menu-label',
+
+    // PALETA DE COMANDOS
+    command: 'fe-command',
+    commandInput: 'fe-command-input',
+    commandList: 'fe-command-list',
+    commandGroup: 'fe-command-group',
+    commandItem: 'fe-command-item',
+    commandEmpty: 'fe-command-empty',
+
+    // AVISOS
     toast: 'fe-toast',
     toastDanger: 'fe-toast-danger',
     toastSuccess: 'fe-toast-success',
+    toastWarning: 'fe-toast-warning',
+    toastTitle: 'fe-toast-title',
+    toastClose: 'fe-toast-close',
+    toastRegion: 'fe-toast-region',
 
     // TABLA
     table: 'fe-table',
     tableNumeric: 'fe-numeric',
+    tableSticky: 'fe-table-sticky',
+    tableSelect: 'fe-table-select',
+    tableResizer: 'fe-table-resizer',
+    tableEmpty: 'fe-table-empty',
+    bulkBar: 'fe-bulk-bar',
+    bulkCount: 'fe-bulk-count',
+
+    // EDICION EN LINEA
+    editable: 'fe-editable',
+
+    // SHELL DE APLICACION
+    shell: 'fe-shell',
+    shellHeader: 'fe-shell-header',
+    shellSidebar: 'fe-shell-sidebar',
+    shellMain: 'fe-shell-main',
 }
 
 /** @type {Theme} */

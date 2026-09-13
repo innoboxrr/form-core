@@ -104,7 +104,7 @@
 [data-tooltip]::after {
     content: attr(data-tooltip);
     position: absolute;
-    z-index: 60;
+    z-index: var(--fe-z-tooltip);
     bottom: calc(100% + var(--fe-space-2));
     left: 50%;
     transform: translateX(-50%);
@@ -329,6 +329,38 @@
     font-size: var(--fe-text-sm);
 }
 
+/* Un botón que solo lleva un icono: cerrar un diálogo, abrir el menú de una
+   fila. Cuadrado, para que el objetivo no dependa del ancho del glifo. */
+.fe-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--fe-control-height);
+    height: var(--fe-control-height);
+    padding: 0;
+    color: var(--fe-text-muted);
+    background: none;
+    border: 1px solid transparent;
+    border-radius: var(--fe-radius);
+    cursor: pointer;
+    transition: background var(--fe-transition), color var(--fe-transition);
+}
+
+.fe-icon-button:hover:not(:disabled) {
+    color: var(--fe-text);
+    background: var(--fe-surface-hover);
+}
+
+.fe-icon-button:focus-visible {
+    outline: 2px solid var(--fe-focus);
+    outline-offset: 2px;
+}
+
+.fe-icon-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
 /* El icono que va dentro del control, a la izquierda. Sustituye a
    `uk-form-icon`, que además de la clase traía el componente de iconos de
    UIkit. */
@@ -433,6 +465,22 @@
     text-decoration: underline;
 }
 
+/* La tecla de un atajo, en un menú o en la paleta de comandos. */
+.fe-kbd {
+    display: inline-flex;
+    align-items: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 var(--fe-space-1);
+    font-family: var(--fe-font-mono);
+    font-size: var(--fe-text-xs);
+    color: var(--fe-text-muted);
+    background: var(--fe-surface-sunk);
+    border: 1px solid var(--fe-border);
+    border-bottom-width: 2px;
+    border-radius: var(--fe-radius-sm);
+}
+
 /* ============================================================
    SUPERFICIES
    ============================================================ */
@@ -474,6 +522,30 @@
     color: var(--fe-text-muted);
 }
 
+.fe-badge-primary {
+    background: var(--fe-primary-soft);
+    color: var(--fe-primary);
+}
+
+.fe-badge-success {
+    background: var(--fe-success-soft);
+    color: var(--fe-success);
+}
+
+.fe-badge-danger {
+    background: var(--fe-danger-soft);
+    color: var(--fe-danger);
+}
+
+.fe-badge-warning {
+    background: var(--fe-warning-soft);
+    color: var(--fe-warning);
+}
+
+/* ============================================================
+   ESQUELETOS
+   ============================================================ */
+
 /* Un esqueleto en vez de un spinner: mantiene la forma de lo que va a
    llegar, así que la página no salta al cargar. */
 .fe-skeleton {
@@ -488,6 +560,32 @@
     animation: fe-skeleton 1.4s ease infinite;
 }
 
+/* Las tres formas que aparecen en una vista de administración: una línea de
+   texto, un avatar y un bloque. Sin ellas cada vista inventaba su altura. */
+.fe-skeleton-text {
+    display: block;
+    width: 100%;
+    height: 0.875em;
+}
+
+.fe-skeleton-text + .fe-skeleton-text {
+    margin-top: var(--fe-space-2);
+}
+
+.fe-skeleton-circle {
+    display: inline-block;
+    width: 2.5rem;
+    aspect-ratio: 1;
+    border-radius: var(--fe-radius-full);
+}
+
+.fe-skeleton-block {
+    display: block;
+    width: 100%;
+    height: 6rem;
+    border-radius: var(--fe-radius);
+}
+
 @keyframes fe-skeleton {
     0% {
         background-position: 100% 50%;
@@ -497,34 +595,180 @@
     }
 }
 
+/* ============================================================
+   DIALOGOS Y DRAWERS
+   ============================================================ */
+
+/*
+ * Sobre el elemento <dialog> del navegador, abierto con showModal():
+ *
+ *     <dialog class="fe-dialog">
+ *         <header class="fe-dialog-header">…</header>
+ *         <div class="fe-dialog-body">…</div>
+ *         <footer class="fe-dialog-footer">…</footer>
+ *     </dialog>
+ *
+ * El navegador pone lo que antes había que programar: la capa superior sin
+ * z-index, el fondo inerte, el foco atrapado dentro, Escape para cerrar y la
+ * devolución del foco al cerrar. Aquí solo se dibuja.
+ *
+ * Nada de lo de aquí fija `display` en el estado cerrado: un <dialog> sin
+ * `open` está oculto porque el navegador le pone display: none, y una regla
+ * que lo pisara lo dejaría visible siempre.
+ */
+
 .fe-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(16, 18, 27, 0.45);
+    z-index: var(--fe-z-overlay);
+    background: var(--fe-overlay);
 }
 
 .fe-dialog {
+    width: min(var(--fe-dialog-width), calc(100vw - 2 * var(--fe-space-4)));
+    max-height: 85vh;
+    padding: 0;
+    color: var(--fe-text);
     background: var(--fe-surface-raised);
     border: 1px solid var(--fe-border);
     border-radius: var(--fe-radius-lg);
     box-shadow: var(--fe-shadow-lg);
-    max-height: 85vh;
     overflow: auto;
 }
 
-.fe-drawer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: min(32rem, 100vw);
-    background: var(--fe-surface);
-    border-left: 1px solid var(--fe-border);
-    box-shadow: var(--fe-shadow-lg);
+.fe-dialog[open] {
     display: flex;
     flex-direction: column;
+    animation: fe-dialog-in var(--fe-duration) var(--fe-ease-out);
+}
+
+.fe-dialog::backdrop,
+.fe-drawer::backdrop {
+    background: var(--fe-overlay);
+    animation: fe-backdrop-in var(--fe-duration) var(--fe-ease-out);
+}
+
+.fe-dialog-sm {
+    --fe-dialog-width: 24rem;
+}
+
+.fe-dialog-lg {
+    --fe-dialog-width: 48rem;
+}
+
+.fe-dialog-header,
+.fe-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--fe-space-3);
+    padding: var(--fe-space-4) var(--fe-space-5);
+    border-bottom: 1px solid var(--fe-border);
+}
+
+.fe-dialog-title,
+.fe-drawer-title {
+    margin: 0;
+    font-size: var(--fe-text-lg);
+    font-weight: 600;
+    color: var(--fe-text);
+}
+
+.fe-dialog-body,
+.fe-drawer-body {
+    padding: var(--fe-space-5);
     overflow: auto;
 }
+
+.fe-dialog-footer,
+.fe-drawer-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--fe-space-2);
+    padding: var(--fe-space-3) var(--fe-space-5);
+    border-top: 1px solid var(--fe-border);
+}
+
+/* Un drawer es un <dialog> pegado a un borde. El formulario de crear o
+   editar se abre aquí y la tabla sigue a la vista, detrás. */
+.fe-drawer {
+    width: min(var(--fe-drawer-width), 100vw);
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: none;
+    margin: 0 0 0 auto;
+    padding: 0;
+    color: var(--fe-text);
+    background: var(--fe-surface);
+    border: none;
+    border-left: 1px solid var(--fe-border);
+    box-shadow: var(--fe-shadow-lg);
+    overflow: hidden;
+}
+
+.fe-drawer[open] {
+    display: flex;
+    flex-direction: column;
+    animation: fe-drawer-in var(--fe-duration) var(--fe-ease-out);
+}
+
+.fe-drawer-body {
+    flex: 1 1 auto;
+}
+
+.fe-drawer-start {
+    margin: 0 auto 0 0;
+    border-left: none;
+    border-right: 1px solid var(--fe-border);
+}
+
+.fe-drawer-start[open] {
+    animation-name: fe-drawer-start-in;
+}
+
+@keyframes fe-dialog-in {
+    from {
+        opacity: 0;
+        transform: translateY(0.5rem) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes fe-drawer-in {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: none;
+    }
+}
+
+@keyframes fe-drawer-start-in {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: none;
+    }
+}
+
+@keyframes fe-backdrop-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================================
+   MENUS
+   ============================================================ */
 
 .fe-menu {
     min-width: 11rem;
@@ -549,7 +793,7 @@
 }
 
 .fe-menu[popover]:popover-open {
-    animation: fe-fade-in 120ms ease;
+    animation: fe-menu-in var(--fe-duration-fast) ease;
 }
 
 .fe-menu-list {
@@ -567,6 +811,7 @@
     font-size: var(--fe-text-sm);
     color: var(--fe-text);
     text-align: left;
+    text-decoration: none;
     background: none;
     border: none;
     border-radius: var(--fe-radius-sm);
@@ -578,17 +823,159 @@
     background: var(--fe-surface-hover);
 }
 
+.fe-menu-item:focus-visible {
+    outline: 2px solid var(--fe-focus);
+    outline-offset: -2px;
+}
+
+.fe-menu-item-danger {
+    color: var(--fe-danger);
+}
+
+.fe-menu-item-danger:hover,
+.fe-menu-item-danger[data-highlighted] {
+    background: var(--fe-danger-soft);
+}
+
+/* Un elemento que no se puede usar se ve y se explica, no desaparece: quien no
+   tiene permiso tiene que saber que la acción existe. */
+.fe-menu-item:disabled,
+.fe-menu-item[aria-disabled='true'] {
+    color: var(--fe-text-subtle);
+    background: none;
+    cursor: not-allowed;
+}
+
+.fe-menu-item .fe-kbd {
+    margin-left: auto;
+}
+
+.fe-menu-separator {
+    height: 1px;
+    margin: var(--fe-space-1) 0;
+    background: var(--fe-border);
+    border: none;
+}
+
+.fe-menu-label {
+    padding: var(--fe-space-2) var(--fe-space-3) var(--fe-space-1);
+    font-size: var(--fe-text-xs);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--fe-text-subtle);
+}
+
+@keyframes fe-menu-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ============================================================
+   PALETA DE COMANDOS
+   ============================================================ */
+
+/*
+ * Un <dialog class="fe-dialog fe-command"> con un buscador y una lista. Se
+ * abre arriba y no centrado: el ojo va a donde se escribe, y la lista crece
+ * hacia abajo sin mover el buscador.
+ */
+
+.fe-command {
+    --fe-dialog-width: var(--fe-command-width);
+    margin: 12vh auto auto;
+    max-height: 70vh;
+}
+
+.fe-command-input {
+    width: 100%;
+    min-height: calc(var(--fe-control-height) * 1.4);
+    padding: 0 var(--fe-space-5);
+    font-family: var(--fe-font);
+    font-size: var(--fe-text-lg);
+    color: var(--fe-text);
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--fe-border);
+}
+
+.fe-command-input:focus {
+    outline: none;
+}
+
+.fe-command-input::placeholder {
+    color: var(--fe-text-subtle);
+}
+
+.fe-command-list {
+    list-style: none;
+    margin: 0;
+    padding: var(--fe-space-2);
+    overflow: auto;
+}
+
+.fe-command-group {
+    padding: var(--fe-space-2) var(--fe-space-3) var(--fe-space-1);
+    font-size: var(--fe-text-xs);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--fe-text-subtle);
+}
+
+.fe-command-item {
+    display: flex;
+    align-items: center;
+    gap: var(--fe-space-3);
+    width: 100%;
+    padding: var(--fe-space-2) var(--fe-space-3);
+    font-size: var(--fe-text-base);
+    color: var(--fe-text);
+    text-align: left;
+    background: none;
+    border: none;
+    border-radius: var(--fe-radius);
+    cursor: pointer;
+}
+
+.fe-command-item[aria-selected='true'],
+.fe-command-item[data-highlighted] {
+    background: var(--fe-primary-soft);
+    color: var(--fe-text);
+}
+
+.fe-command-item .fe-kbd {
+    margin-left: auto;
+}
+
+.fe-command-empty {
+    padding: var(--fe-space-6) var(--fe-space-4);
+    font-size: var(--fe-text-sm);
+    text-align: center;
+    color: var(--fe-text-muted);
+}
+
+/* ============================================================
+   AVISOS
+   ============================================================ */
+
 .fe-toast {
     display: flex;
     align-items: flex-start;
     gap: var(--fe-space-3);
     padding: var(--fe-space-3) var(--fe-space-4);
     font-size: var(--fe-text-sm);
+    color: var(--fe-text);
     background: var(--fe-surface-raised);
     border: 1px solid var(--fe-border);
     border-left: 3px solid var(--fe-primary);
     border-radius: var(--fe-radius);
     box-shadow: var(--fe-shadow);
+    animation: fe-toast-in var(--fe-duration) var(--fe-ease-out);
 }
 
 .fe-toast-danger {
@@ -597,6 +984,61 @@
 
 .fe-toast-success {
     border-left-color: var(--fe-success);
+}
+
+.fe-toast-warning {
+    border-left-color: var(--fe-warning);
+}
+
+.fe-toast-title {
+    display: block;
+    font-weight: 600;
+}
+
+.fe-toast-close {
+    margin-left: auto;
+}
+
+/*
+ * La región donde se apilan los avisos. Va con el atributo popover="manual"
+ * para vivir en la capa superior: un aviso que llega mientras hay un drawer
+ * abierto con showModal() quedaría debajo del fondo inerte, y justo ahí es
+ * donde se guarda un formulario.
+ */
+.fe-toast-region {
+    position: fixed;
+    right: var(--fe-space-4);
+    bottom: var(--fe-space-4);
+    z-index: var(--fe-z-toast);
+    display: flex;
+    flex-direction: column;
+    gap: var(--fe-space-2);
+    width: min(24rem, calc(100vw - 2 * var(--fe-space-4)));
+    pointer-events: none;
+}
+
+.fe-toast-region[popover] {
+    inset: auto var(--fe-space-4) var(--fe-space-4) auto;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+    border: none;
+}
+
+.fe-toast-region > * {
+    pointer-events: auto;
+}
+
+@keyframes fe-toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(0.5rem);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 /* ============================================================
@@ -610,6 +1052,7 @@
 }
 
 .fe-table th {
+    position: relative;
     padding: var(--fe-space-2) var(--fe-space-3);
     font-size: var(--fe-text-xs);
     font-weight: 500;
@@ -641,8 +1084,191 @@
     text-align: right;
 }
 
+/* Una columna ordenable lo dice antes de pulsarla. */
+.fe-table th[aria-sort] {
+    cursor: pointer;
+    user-select: none;
+}
+
+.fe-table th[aria-sort='ascending'],
+.fe-table th[aria-sort='descending'] {
+    color: var(--fe-text);
+}
+
+/* La cabecera se queda arriba al desplazar un listado largo. */
+.fe-table-sticky thead th {
+    position: sticky;
+    top: 0;
+    z-index: var(--fe-z-sticky);
+    background: var(--fe-surface);
+}
+
+/* La columna de las casillas de selección: tan estrecha como la casilla. */
+.fe-table-select {
+    width: 1%;
+    white-space: nowrap;
+}
+
+/* El tirador para cambiar el ancho de una columna. */
+.fe-table-resizer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 6px;
+    height: 100%;
+    cursor: col-resize;
+    user-select: none;
+    touch-action: none;
+}
+
+.fe-table-resizer:hover,
+.fe-table-resizer[data-resizing='true'] {
+    background: var(--fe-focus);
+}
+
+/* Una tabla sin filas dice por qué, en el sitio de las filas. */
+.fe-table-empty {
+    padding: var(--fe-space-6) var(--fe-space-4);
+    text-align: center;
+    color: var(--fe-text-muted);
+}
+
+/*
+ * La barra que aparece al seleccionar filas: cuántas hay y qué se puede hacer
+ * con todas a la vez. Sustituye a la barra de herramientas mientras dura la
+ * selección, en el mismo sitio, para que la tabla no salte.
+ */
+.fe-bulk-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--fe-space-3);
+    padding: var(--fe-space-2) var(--fe-space-4);
+    color: var(--fe-text);
+    background: var(--fe-primary-soft);
+    border-radius: var(--fe-radius);
+}
+
+.fe-bulk-count {
+    font-size: var(--fe-text-sm);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   EDICION EN LINEA
+   ============================================================ */
+
+/* Un valor que se edita donde está. Se distingue del texto normal solo al
+   pasar o enfocar, para que una tabla editable no parezca un formulario. */
+.fe-editable {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fe-space-1);
+    min-height: 1.5em;
+    padding: 0 var(--fe-space-1);
+    margin: 0 calc(-1 * var(--fe-space-1));
+    border-radius: var(--fe-radius-sm);
+    border-bottom: 1px dashed transparent;
+    cursor: text;
+}
+
+.fe-editable:hover {
+    border-bottom-color: var(--fe-border-strong);
+}
+
+.fe-editable:focus-visible {
+    outline: 2px solid var(--fe-focus);
+    outline-offset: 1px;
+}
+
+.fe-editable[data-saving='true'] {
+    opacity: 0.6;
+    cursor: progress;
+}
+
+.fe-editable[data-invalid='true'] {
+    border-bottom-color: var(--fe-danger);
+}
+
+/* ============================================================
+   SHELL DE APLICACION
+   ============================================================ */
+
+/*
+ * La forma de una aplicación de escritorio: cabecera, barra lateral y el área
+ * de trabajo, que es lo único que cambia al navegar.
+ *
+ *     <div class="fe-shell">
+ *         <header class="fe-shell-header">…</header>
+ *         <nav class="fe-shell-sidebar">…</nav>
+ *         <main class="fe-shell-main">…</main>
+ *     </div>
+ */
+
+.fe-shell {
+    display: grid;
+    grid-template-columns: var(--fe-sidebar-width) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    min-height: 100dvh;
+    color: var(--fe-text);
+    background: var(--fe-bg);
+}
+
+.fe-shell-header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: var(--fe-space-3);
+    padding: var(--fe-space-2) var(--fe-space-4);
+    background: var(--fe-surface);
+    border-bottom: 1px solid var(--fe-border);
+}
+
+.fe-shell-sidebar {
+    padding: var(--fe-space-3);
+    overflow: auto;
+    background: var(--fe-surface);
+    border-right: 1px solid var(--fe-border);
+}
+
+.fe-shell-main {
+    min-width: 0;
+    padding: var(--fe-space-5);
+    overflow: auto;
+}
+
+/* En pantallas estrechas la barra lateral sale del flujo y se abre encima. */
+@media (max-width: 959px) {
+    .fe-shell {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .fe-shell-sidebar {
+        display: none;
+    }
+
+    .fe-shell[data-sidebar-open='true'] .fe-shell-sidebar {
+        display: block;
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: var(--fe-z-overlay);
+        width: min(var(--fe-sidebar-width), 85vw);
+        box-shadow: var(--fe-shadow-lg);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .fe-skeleton {
+        animation: none;
+    }
+
+    .fe-dialog[open],
+    .fe-drawer[open],
+    .fe-dialog::backdrop,
+    .fe-drawer::backdrop,
+    .fe-menu[popover]:popover-open,
+    .fe-toast {
         animation: none;
     }
 
@@ -652,7 +1278,8 @@
     .fe-button,
     .fe-button-secondary,
     .fe-button-danger,
-    .fe-button-link {
+    .fe-button-link,
+    .fe-icon-button {
         transition: none;
     }
 }

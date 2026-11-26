@@ -113,11 +113,16 @@ describe('previewFor', () => {
     it('sin createObjectURL cae al icono en vez de lanzar', () => {
         const original = URL.createObjectURL
 
-        delete URL.createObjectURL
+        // Con Vitest 5 y jsdom 31 el URL del entorno hereda el
+        // createObjectURL de Node: borrar la propiedad propia ya no lo quita,
+        // asi que se tapa con undefined para simular el entorno sin ella.
+        URL.createObjectURL = undefined
 
-        expect(previewFor(file('a.png', 'image/png'))).toBe(FILE_ICON)
-
-        URL.createObjectURL = original
+        try {
+            expect(previewFor(file('a.png', 'image/png'))).toBe(FILE_ICON)
+        } finally {
+            URL.createObjectURL = original
+        }
     })
 
     it('lo que no es imagen usa el icono, y el icono no sale a la red', () => {
